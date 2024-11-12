@@ -17,21 +17,21 @@ public:
         {
             return preorder;
         }
-        stack<TreeNode* >st;
+        stack<TreeNode*>st;
         st.push(root);
         while(!st.empty())
         {
-            root=st.top();
+            TreeNode* node=st.top();
             st.pop();
-            preorder.push_back(root->val);
-            if(root->right!=NULL)
+            if(node->right!=NULL)
             {
-                st.push(root->right);
+                st.push(node->right);
             }
-            if(root->left!=NULL)
+            if(node->left!=NULL)
             {
-                st.push(root->left);
+                st.push(node->left);
             }
+            preorder.push_back(node->val);
         }
         return preorder;
     }

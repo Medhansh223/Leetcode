@@ -11,35 +11,26 @@
  */
 class Solution {
 public:
-    vector<int> rightSideView(TreeNode* root) {
-        vector<int>ans;
+    void rightside(TreeNode* root, int level, vector<int>& result)
+    {
         if(root==NULL)
         {
-            return ans;
+            return;
         }
-        queue<TreeNode*>q;
-        q.push(root);
-        while(!q.empty())
+        if(result.size()==level)
         {
-            int n=q.size();
-            vector<int>result;
-            for(int i=0;i<n;i++)
-            {
-                root=q.front();
-                q.pop();
-                if(root->left!=NULL)
-                {
-                    q.push(root->left);
-                }
-                if(root->right!=NULL)
-                {
-                    q.push(root->right);
-                }
-                result.push_back(root->val);
-            }
-            int x=result.size();
-            ans.push_back(result[x-1]);
+            result.push_back(root->val);
         }
-        return ans;
+        rightside(root->right, level+1, result);
+        rightside(root->left, level+1, result);
+    }
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int>result;
+        if(root==NULL)
+        {
+            return result;
+        }
+        rightside(root,0,result);
+        return result;
     }
 };

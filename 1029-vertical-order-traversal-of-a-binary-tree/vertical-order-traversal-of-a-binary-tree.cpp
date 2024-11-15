@@ -35,12 +35,12 @@ public:
         vector<vector<int>>ans;
         for(auto it:mpp)
         {
-            vector<int>res;
+            vector<int>result;
             for(auto s:it.second)
             {
-                res.insert(res.end(), s.second.begin(), s.second.end());
+                result.insert(result.end(),s.second.begin(),s.second.end());
             }
-            ans.push_back(res);
+            ans.push_back(result);
         }
         return ans;
     }

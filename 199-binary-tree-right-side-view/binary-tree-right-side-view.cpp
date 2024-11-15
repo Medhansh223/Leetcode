@@ -11,26 +11,26 @@
  */
 class Solution {
 public:
-    void rightside(TreeNode* root, int level, vector<int>& result)
+    void rightside(TreeNode* root, int level, vector<int>& ans)
     {
         if(root==NULL)
         {
             return;
         }
-        if(result.size()==level)
+        if(ans.size()==level)
         {
-            result.push_back(root->val);
+            ans.push_back(root->val);
         }
-        rightside(root->right, level+1, result);
-        rightside(root->left, level+1, result);
+        rightside(root->right, level+1, ans);
+        rightside(root->left, level+1, ans);
     }
     vector<int> rightSideView(TreeNode* root) {
-        vector<int>result;
+        vector<int>ans;
         if(root==NULL)
         {
-            return result;
+            return ans;
         }
-        rightside(root,0,result);
-        return result;
+        rightside(root,0,ans);
+        return ans;
     }
 };

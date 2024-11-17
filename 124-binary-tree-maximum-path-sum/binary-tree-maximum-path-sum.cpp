@@ -11,24 +11,24 @@
  */
 class Solution {
 public:
+    int maxpath(TreeNode* root, int &maxi)
+    {
+        if(root==NULL)
+        {
+            return 0;
+        }
+        int lh=max(0, maxpath(root->left, maxi));
+        int rh=max(0, maxpath(root->right, maxi));
+        maxi=max(maxi,lh+rh+root->val);
+        return root->val + max(lh, rh);
+    }
     int maxPathSum(TreeNode* root) {
         if(root==NULL)
         {
             return 0;
         }
         int maxi=INT_MIN;
-        maxPath(root,maxi);
+        maxpath(root,maxi);
         return maxi;
-    }
-    int maxPath(TreeNode* root, int &maxi)
-    {
-        if(root==NULL)
-        {
-            return 0;
-        }
-        int left=max(0,maxPath(root->left, maxi));
-        int right=max(0,maxPath(root->right, maxi));
-        maxi=max(maxi, left+right+root->val);
-        return root->val+max(left,right);
     }
 };

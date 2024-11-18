@@ -17,17 +17,18 @@ public:
             return 0;
         }
         queue<TreeNode*>q;
-        int depth=0;
         q.push(root);
+        int count=0;
         while(!q.empty())
         {
-            int n=q.size();
-            depth++;
             vector<int>level;
+            int n=q.size();
+            count++;
             for(int i=0;i<n;i++)
             {
                 root=q.front();
                 q.pop();
+                level.push_back(root->val);
                 if(root->left!=NULL)
                 {
                     q.push(root->left);
@@ -36,9 +37,8 @@ public:
                 {
                     q.push(root->right);
                 }
-                level.push_back(root->val);
             }
         }
-        return depth;
+        return count;
     }
 };

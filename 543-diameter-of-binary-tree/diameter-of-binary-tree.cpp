@@ -17,13 +17,17 @@ public:
         {
             return 0;
         }
-        int lh=height(root->left,diameter);
-        int rh=height(root->right,diameter);
+        int lh=height(root->left, diameter);
+        int rh=height(root->right, diameter);
         diameter=max(diameter,lh+rh);
         return 1+max(lh,rh);
     }
     int diameterOfBinaryTree(TreeNode* root) {
-        int diameter=0;
+        if(root==NULL)
+        {
+            return 0;
+        }
+        int diameter=INT_MIN;
         height(root,diameter);
         return diameter;
     }

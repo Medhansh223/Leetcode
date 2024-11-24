@@ -35,10 +35,10 @@ public:
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
         vector<vector<int>>ans;
         vector<int>res;
-        if(root==NULL)
-        {
-            return ans;
-        }
+        // if(root==NULL)
+        // {
+        //     return ans;
+        // }
         getpath(root,ans,res,targetSum);
         return ans;
     }

@@ -1,28 +1,19 @@
 class Solution {
 public:
-    void bfs(int row, int col, vector<vector<int>>& visited, vector<vector<int>>& grid)
+    void dfs(int row, int col, vector<vector<int>>& visited, vector<vector<int>>& grid)
     {
         int n=grid.size();
         int m=grid[0].size();
-        queue<pair<int,int>>q;
         visited[row][col]=1;
-        q.push({row,col});
         int drow[]={-1,0,+1,0};
         int dcol[]={0,+1,0,-1};
-        while(!q.empty())
+        for(int i=0;i<4;i++)
         {
-            int r=q.front().first;
-            int c=q.front().second;
-            q.pop();
-            for(int i=0;i<4;i++)
+            int nrow=row+drow[i];
+            int ncol=col+dcol[i];
+            if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && grid[nrow][ncol]==1 && visited[nrow][ncol]!=1)
             {
-                int nrow=r+drow[i];
-                int ncol=c+dcol[i];
-                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && grid[nrow][ncol]==1 && visited[nrow][ncol]!=1)
-                {
-                    visited[nrow][ncol]=1;
-                    q.push({nrow,ncol});
-                }
+                dfs(nrow,ncol,visited,grid);
             }
         }
     }
@@ -39,7 +30,7 @@ public:
                 {
                     if(grid[i][j]==1 && visited[i][j]!=1)
                     {
-                        bfs(i,j,visited,grid);
+                        dfs(i,j,visited,grid);
                     }
                 }
             }

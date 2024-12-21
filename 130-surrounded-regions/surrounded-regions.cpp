@@ -1,19 +1,28 @@
 class Solution {
 public:
-    void dfs(int row, int col, vector<vector<int>>& visited, vector<vector<char>>& board)
+    void bfs(int row, int col, vector<vector<int>>& visited, vector<vector<char>>& board)
     {
         int n=board.size();
         int m=board[0].size();
+        queue<pair<int,int>>q;
         visited[row][col]=1;
+        q.push({row,col});
         int drow[]={-1,0,+1,0};
         int dcol[]={0,+1,0,-1};
-        for(int i=0;i<4;i++)
+        while(!q.empty())
         {
-            int nrow=row+drow[i];
-            int ncol=col+dcol[i];
-            if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && board[nrow][ncol]=='O' && visited[nrow][ncol]!=1)
+            int r=q.front().first;
+            int c=q.front().second;
+            q.pop();
+            for(int i=0;i<4;i++)
             {
-                dfs(nrow,ncol,visited,board);
+                int nrow=r+drow[i];
+                int ncol=c+dcol[i];
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && board[nrow][ncol]=='O' && visited[nrow][ncol]!=1)
+                {
+                    visited[nrow][ncol]=1;
+                    q.push({nrow,ncol});
+                }
             }
         }
     }
@@ -25,22 +34,22 @@ public:
         {
             if(board[0][j]=='O' && visited[0][j]!=1)
             {
-                dfs(0,j,visited,board);
+                bfs(0,j,visited,board);
             }
             if(board[n-1][j]=='O' && visited[n-1][j]!=1)
             {
-                dfs(n-1,j,visited,board);
+                bfs(n-1,j,visited,board);
             }
         }
         for(int i=0;i<n;i++)
         {
             if(board[i][0]=='O' && visited[i][0]!=1)
             {
-                dfs(i,0,visited,board);
+                bfs(i,0,visited,board);
             }
             if(board[i][m-1]=='O' && visited[i][m-1]!=1)
             {
-                dfs(i,m-1,visited,board);
+                bfs(i,m-1,visited,board);
             }
         }
         for(int i=0;i<n;i++)

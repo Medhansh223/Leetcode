@@ -1,10 +1,12 @@
 class Solution {
 public:
-    void bfs(int sr, int sc, vector<vector<int>>& ans, vector<vector<int>>& image, int color, int row[], int col[], int initial)
+    void bfs(vector<vector<int>>& ans, vector<vector<int>>& image, int sr, int sc, int color, int& initial)
     {
-        ans[sr][sc]=color;
         int n=image.size();
         int m=image[0].size();
+        ans[sr][sc]=color;
+        vector<int>drow={-1,0,+1,0};
+        vector<int>dcol={0,+1,0,-1};
         queue<pair<int,int>>q;
         q.push({sr,sc});
         while(!q.empty())
@@ -14,22 +16,22 @@ public:
             q.pop();
             for(int i=0;i<4;i++)
             {
-                int nrow=r+row[i];
-                int ncol=c+col[i];
-                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && image[nrow][ncol]==initial && ans[nrow][ncol]!=color)
+                int row=r+drow[i];
+                int col=c+dcol[i];
+                if(row>=0 && row<n && col>=0 && col<m && image[row][col]==initial && ans[row][col]!=color)
                 {
-                    q.push({nrow,ncol});
-                    ans[nrow][ncol]=color;
+                    q.push({row,col});
+                    ans[row][col]=color;
                 }
             }
         }
     }
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int n=image.size();
+        int m=image[0].size();
         int initial=image[sr][sc];
         vector<vector<int>>ans=image;
-        int row[]={-1,0,+1,0};
-        int col[]={0,+1,0,-1};
-        bfs(sr,sc,ans,image,color,row,col,initial);
+        bfs(ans,image,sr,sc,color,initial);
         return ans;
     }
 };

@@ -13,10 +13,12 @@ public:
             {
                 if(colored[adjacentnode]==-1)
                 {
-                    colored[adjacentnode]=!colored[element];
-                    q.push(adjacentnode);
+                    if(bfs(adjacentnode,!color,colored,graph)==false)
+                    {
+                        return false;
+                    }
                 }
-                else if(colored[adjacentnode]==colored[element])
+                else if(colored[adjacentnode]==color)
                 {
                     return false;
                 }

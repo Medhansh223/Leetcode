@@ -17,18 +17,18 @@ public:
         {
             return -1;
         }
-        queue<pair<int,pair<int,int>>>q;
-        q.push({1,{0,0}});
+        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>>pq;
+        pq.push({1,{0,0}});
         vector<vector<int>>distance(n,vector<int>(n,INT_MAX));
         distance[0][0]=1;
         vector<int>drow={-1, -1, -1, 0, 1, 1, 1, 0};
         vector<int>dcol={-1, 0, 1, 1, 1, 0, -1, -1};
-        while(!q.empty())
+        while(!pq.empty())
         {
-            int dist=q.front().first;
-            int row=q.front().second.first;
-            int col=q.front().second.second;
-            q.pop();
+            int dist=pq.top().first;
+            int row=pq.top().second.first;
+            int col=pq.top().second.second;
+            pq.pop();
             for(int i=0;i<8;i++)
             {
                 int nrow=row+drow[i];
@@ -40,7 +40,7 @@ public:
                     {
                         return dist+1;
                     }
-                    q.push({distance[nrow][ncol],{nrow,ncol}});
+                    pq.push({distance[nrow][ncol],{nrow,ncol}});
                 }
             }
         }

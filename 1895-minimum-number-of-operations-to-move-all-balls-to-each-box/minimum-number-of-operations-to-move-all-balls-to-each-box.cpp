@@ -2,19 +2,34 @@ class Solution {
 public:
     vector<int> minOperations(string boxes) {
         int n=boxes.size();
-        vector<int>ans(n,0);
+        vector<int>pre(n,0);
+        int operations=0;
+        int count=0;
         for(int i=0;i<n;i++)
         {
-            int sum=0;
-            for(int j=0;j<n;j++)
+            pre[i]=operations;
+            if(boxes[i]=='1')
             {
-                if(boxes[j]=='1' && i!=j)
-                {
-                    sum=sum+abs(i-j);
-                }
+                count++;
             }
-            ans[i]=sum;
+            operations=operations+count;
         }
-        return ans;
+        vector<int>post(n,0);
+        operations=0;
+        count=0;
+        for(int i=n-1;i>=0;i--)
+        {
+            post[i]=operations;
+            if(boxes[i]=='1')
+            {
+                count++;
+            }
+            operations=operations+count;
+        }
+        for(int i=0;i<n;i++)
+        {
+            pre[i]=pre[i]+post[i];
+        }
+        return pre;
     }
 };

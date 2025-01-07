@@ -84,7 +84,6 @@ public:
             mpp[row]=true;
             mpp[col]=true;
         }
-
         int count=0;
         for(auto it:mpp)
         {

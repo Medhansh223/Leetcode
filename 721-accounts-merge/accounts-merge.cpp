@@ -1,6 +1,6 @@
 class DisjointSet{
-    vector<int>parent,rank,size;
 public:
+    vector<int>parent,rank,size;
     DisjointSet(int n)
     {
         parent.resize(n+1,0);
@@ -92,7 +92,6 @@ public:
             int node=ds.find(it.second);
             merge[node].push_back(mail);
         }
-
         vector<vector<string>>ans;
         for(int i=0;i<n;i++)
         {
@@ -109,6 +108,5 @@ public:
             ans.push_back(result);
         }
         return ans;
-
     }
 };

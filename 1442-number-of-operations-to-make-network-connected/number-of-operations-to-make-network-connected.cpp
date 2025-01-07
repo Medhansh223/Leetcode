@@ -1,12 +1,12 @@
 class DisjointSet{
-    vector<int>parent,rank,size;
 public:
+    vector<int>parent,rank,size;
     DisjointSet(int n)
     {
         parent.resize(n+1,0);
         rank.resize(n+1,0);
         size.resize(n+1,0);
-        for(int i=0;i<n;i++)
+        for(int i=0;i<=n;i++)
         {
             parent[i]=i;
             size[i]=1;

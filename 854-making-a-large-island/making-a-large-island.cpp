@@ -69,7 +69,7 @@ public:
         int n=grid.size();
         DisjointSet ds(n*n);
         vector<int>drow={-1,0,+1,0};
-        vector<int>dcol={0,+1,0,-1};
+        vector<int>dcol={0,1,0,-1};
         for(int row=0;row<n;row++)
         {
             for(int col=0;col<n;col++)
@@ -84,43 +84,43 @@ public:
                     int ncol=col+dcol[k];
                     if(nrow>=0 && nrow<n && ncol>=0 && ncol<n && grid[nrow][ncol]==1)
                     {
-                        int node=(row*n)+col;
-                        int adjacent=(nrow*n)+ncol;
-                        ds.UnionSize(node, adjacent);
+                        int point=(row*n)+col;
+                        int npoint=(nrow*n)+ncol;
+                        ds.UnionSize(point,npoint);
                     }
                 }
-            }   
+            }
         }
         int maxi=0;
         for(int row=0;row<n;row++)
         {
             for(int col=0;col<n;col++)
             {
-                set<int>st;
                 if(grid[row][col]==1)
                 {
                     continue;
                 }
+                set<int>components;
                 for(int k=0;k<4;k++)
                 {
                     int nrow=row+drow[k];
                     int ncol=col+dcol[k];
                     if(nrow>=0 && nrow<n && ncol>=0 && ncol<n && grid[nrow][ncol]==1)
                     {
-                        st.insert(ds.find((nrow*n)+ncol));
+                        components.insert(ds.find((nrow*n)+ncol));
                     }
                 }
                 int totalsize=0;
-                for(auto it:st)
+                for(auto it:components)
                 {
                     totalsize=totalsize+ds.size[it];
                 }
                 maxi=max(maxi,totalsize+1);
-            }   
+            }
         }
-        for(int i=0;i<n*n;i++)
+        for(int cellno=0;cellno<n*n;cellno++)
         {
-            maxi=max(maxi,ds.size[ds.find(i)]);
+            maxi=max(maxi,ds.size[ds.find(cellno)]);
         }
         return maxi;
     }

@@ -7,7 +7,7 @@ public:
         {
             xor1=xor1^nums[i];
         }
-        long long right_bit = xor1 ^ (xor1 & (xor1-1));
+        int right_bit = int(xor1 ^ (xor1 & (xor1-1)));
         int b1=0;
         int b2=0;
         for(int i=0;i<n;i++)

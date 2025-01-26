@@ -32,10 +32,6 @@ public:
         int longestcycle=0;
         for(int i=0;i<n;i++)
         {
-            if(indegree[i]==0)
-            {
-                continue;
-            }
             int cyclelength=0;
             int current=i;
             while(indegree[current]!=0) 

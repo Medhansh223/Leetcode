@@ -30,31 +30,27 @@ public:
         }
         int cycle=0;
         int longestcycle=0;
-        vector<int>visited(n,0);
         for(int i=0;i<n;i++)
         {
-            // if(indegree[i]==0)
-            // {
-            //     continue;
-            // }
-            if(indegree[i]>0)
+            if(indegree[i]==0)
             {
-                int cyclelength=0;
-                int current=i;
-                while (!visited[current]) 
-                {
-                    visited[current] = 1;
-                    cyclelength++;
-                    current = favorite[current];
-                }
-                if(cyclelength==2)
-                {
-                    cycle=cycle+depth[i]+depth[favorite[i]];
-                }
-                else
-                {
-                    longestcycle=max(longestcycle,cyclelength);
-                }
+                continue;
+            }
+            int cyclelength=0;
+            int current=i;
+            while(indegree[current]!=0) 
+            {
+                indegree[current]=0;
+                cyclelength++;
+                current = favorite[current];
+            }
+            if(cyclelength==2)
+            {
+                cycle=cycle+depth[i]+depth[favorite[i]];
+            }
+            else
+            {
+                longestcycle=max(longestcycle,cyclelength);
             }
         }
         return max(longestcycle,cycle);

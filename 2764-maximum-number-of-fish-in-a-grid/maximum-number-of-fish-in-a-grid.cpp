@@ -1,46 +1,39 @@
 class Solution {
 public:
-    int bfs(int row, int col, vector<vector<int>>& visited, vector<vector<int>>& grid)
+    void dfs(int r,int c,vector<vector<int>>&visited,vector<vector<int>>&grid,int &sum)
     {
         int n=grid.size();
         int m=grid[0].size();
-        visited[row][col]=1;
-        queue<pair<int,int>>q;
-        q.push({row,col});
-        vector<int>drow={-1,0,+1,0};
-        vector<int>dcol={0,+1,0,-1};
-        int sum=grid[row][col];
-        while(!q.empty())
-        {
-            int r=q.front().first;
-            int c=q.front().second;
-            q.pop();
+        int drow[4]={-1,0,+1,0};
+        int dcol[4]={0,+1,0,-1};
+        visited[r][c]=1;
+        
+           
             for(int i=0;i<4;i++)
             {
                 int nrow=r+drow[i];
                 int ncol=c+dcol[i];
-                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && grid[nrow][ncol]>0 && visited[nrow][ncol]!=1)
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !visited[nrow][ncol] && grid[nrow][ncol]>0)
                 {
-                    q.push({nrow,ncol});
-                    visited[nrow][ncol]=1;
-                    sum+=grid[nrow][ncol];
-                } 
+                    sum=sum+grid[nrow][ncol];
+                    dfs(nrow,ncol,visited,grid,sum);
+                }
             }
-        }
-        return sum;
     }
     int findMaxFish(vector<vector<int>>& grid) {
         int n=grid.size();
         int m=grid[0].size();
         vector<vector<int>>visited(n,vector<int>(m,0));
-        int maxsum = 0;
+        int maxsum=0;
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
-                if(grid[i][j]>0 && visited[i][j]!=1)
+                if(!visited[i][j] && grid[i][j]>0)
                 {
-                    maxsum=max(maxsum,bfs(i,j,visited,grid));
+                    int sum=grid[i][j];
+                    dfs(i,j,visited,grid,sum);
+                    maxsum=max(maxsum,sum);
                 }
             }
         }

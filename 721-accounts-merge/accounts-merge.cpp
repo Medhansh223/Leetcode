@@ -71,8 +71,8 @@ public:
         map<string,int>mpp;
         for(int i=0;i<n;i++)
         {
-            int m=accounts[i].size();
-            for(int j=1;j<m;j++)
+            int s=accounts[i].size();
+            for(int j=1;j<s;j++)
             {
                 string mail=accounts[i][j];
                 if(mpp.find(mail)==mpp.end())

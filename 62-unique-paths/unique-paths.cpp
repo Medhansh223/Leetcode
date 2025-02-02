@@ -20,15 +20,16 @@ public:
         return dp[i][j];
     }
 
-    int tabulation(int m, int n, vector<vector<int>>& dp)
+    int optimization(int m, int n, vector<int>& prev)
     {
         for(int i=0;i<m;i++)
         {
+            vector<int>temp(n,-1);
             for(int j=0;j<n;j++)
             {
                 if(i==0 && j==0)
                 {
-                    dp[i][j]=1;
+                    temp[j]=1;
                 }
                 else
                 {
@@ -36,22 +37,25 @@ public:
                     int left=0;
                     if(i>0)
                     {
-                        up=dp[i-1][j];
+                        up=prev[j];
                     }
                     if(j>0)
                     {
-                        left=dp[i][j-1];
+                        left=temp[j-1];
                     }
-                    dp[i][j]=up+left;
+                    temp[j]=up+left;
                 }
             }
+            prev=temp;
         }
-        return dp[m-1][n-1];
+        return prev[n-1];
     }
     int uniquePaths(int m, int n) {
-        vector<vector<int>>dp(m,vector<int>(n,-1));
+        // vector<vector<int>>dp(m,vector<int>(n,-1));
         // int ans1 = memoization(m-1,n-1,dp);
-        int ans2 = tabulation(m,n,dp);
-        return ans2;
+        // int ans2 = tabulation(m,n,dp);
+        vector<int>dp(n,-1);
+        int ans3 = optimization(m,n,dp);
+        return ans3;
     }
 };

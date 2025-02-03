@@ -50,6 +50,32 @@ public:
         return dp[n-1][k];
     }
 
+    bool optimisation(int n, int k, vector<bool>& prev, vector<int>& nums)
+    {
+        prev[0]=true;
+        if(nums[0]<=k)
+        {
+            prev[nums[0]]=true;
+        }
+        for(int i=1;i<n;i++)
+        {
+            vector<bool>curr(k+1,false);
+            curr[0]=true;
+            for(int target=1;target<=k;target++)
+            {
+                bool not_pick = prev[target];
+                bool pick = false;
+                if(nums[i]<=target)
+                {
+                    pick = prev[target-nums[i]];
+                }
+                curr[target] = pick || not_pick;
+            }
+            prev = curr;
+        }
+        return prev[k];
+    }
+
     bool canPartition(vector<int>& nums) {
         int n = nums.size();
         int sum = 0;
@@ -65,10 +91,10 @@ public:
         // vector<vector<int>>dp(n,vector<int>(target+1,-1));
         // return memoization(n-1,target,dp,nums);
 
-        vector<vector<bool>>dp(n,vector<bool>(target+1,false));
-        return tabulation(n,target,dp,nums);
+        // vector<vector<bool>>dp(n,vector<bool>(target+1,false));
+        // return tabulation(n,target,dp,nums);
 
-        // vector<bool>dp(sum+1,-1));
-        // return optimisation(n,target,dp,nums);
+        vector<bool>prev(target+1,false);
+        return optimisation(n,target,prev,nums);
     }
 };

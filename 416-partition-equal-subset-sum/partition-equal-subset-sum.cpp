@@ -24,7 +24,7 @@ public:
         return dp[n][target];
     }
 
-    bool tabulation(int n, int k, vector<vector<int>>& dp, vector<int>& nums)
+    bool tabulation(int n, int k, vector<vector<bool>>& dp, vector<int>& nums)
     {
         for(int i=0;i<n;i++)
         {
@@ -62,11 +62,11 @@ public:
             return false;
         }
         int target = sum/2;
-        vector<vector<int>>dp(n,vector<int>(target+1,-1));
-        return memoization(n-1,target,dp,nums);
+        // vector<vector<int>>dp(n,vector<int>(target+1,-1));
+        // return memoization(n-1,target,dp,nums);
 
-        // vector<vector<bool>>dp(n,vector<bool>(sum+1,false));
-        // return tabulation(n,target,dp,nums);
+        vector<vector<bool>>dp(n,vector<bool>(target+1,false));
+        return tabulation(n,target,dp,nums);
 
         // vector<bool>dp(sum+1,-1));
         // return optimisation(n,target,dp,nums);

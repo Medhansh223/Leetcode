@@ -12,24 +12,10 @@ public:
         {
             mpp[s1[i]]++;
         }
-        for(int i=0;i<m;i++)
-        {
-            if(mpp.find(s2[i])==mpp.end())
-            {
-                return false;
-            }
-        }
         map<char,int>mp;
         for(int i=0;i<n;i++)
         {
             mp[s2[i]]++;
-        }
-        for(int i=0;i<n;i++)
-        {
-            if(mp.find(s1[i])==mp.end())
-            {
-                return false;
-            }
         }
         for(auto it:mpp)
         {

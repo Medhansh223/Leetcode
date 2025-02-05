@@ -1,16 +1,12 @@
 class Solution {
 public:
-    static bool comp(vector<int>& a, vector<int>& b)
-    {
-        return a[0] < b[0];
-    }
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
         vector<vector<int>>ans;
         if(intervals.size()==0)
         {
             return ans;
         }
-        sort(intervals.begin(),intervals.end(),comp);
+        sort(intervals.begin(),intervals.end());
         vector<int>temp=intervals[0];
         for(auto it:intervals)
         {

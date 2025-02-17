@@ -1,28 +1,29 @@
 class Solution {
 public:
-    void solve(string tiles, vector<bool>& used, set<string>& st, string& curr, int n)
+    void solve(vector<int>& vec, int& count)
     {
-        st.insert(curr);
-        for(int i=0;i<n;i++)
+        count++;
+        for(int i=0;i<26;i++)
         {
-            if(used[i] == true)
+            if(vec[i] == 0)
             {
                 continue;
             }
-            used[i] = true;
-            curr.push_back(tiles[i]);
-            solve(tiles, used, st, curr, n);
-            used[i] = false;
-            curr.pop_back();
+            vec[i]--;
+            solve(vec, count);
+            vec[i]++;
         }
     }
 
     int numTilePossibilities(string tiles) {
         int n = tiles.size();
-        vector<bool>used(n,false);
-        set<string>st;
-        string curr = "";
-        solve(tiles, used, st, curr, n);
-        return st.size() - 1;
+        int count = 0;
+        vector<int>vec(26,0);
+        for(char ch : tiles)
+        {
+            vec[ch - 'A']++;
+        }
+        solve(vec, count);
+        return count - 1;
     }
 };

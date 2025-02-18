@@ -6,9 +6,13 @@ public:
             if(count % 2 == 1) 
             {
                 result = (result * base) % mod;
+                count = count - 1;
             }
-            base = (base * base) % mod;
-            count = count / 2;
+            else
+            {
+                base = (base * base) % mod;
+                count = count / 2;
+            }
         }
         return result;
     }

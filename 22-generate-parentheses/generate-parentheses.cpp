@@ -1,51 +1,39 @@
 class Solution {
 public:
     vector<string>result;
-    bool isValid(string& s)
-    {
-        int n = s.length();
-        int count = 0;
-        for(int i=0;i<n;i++)
-        {
-            if(s[i] == '(')
-            {
-                count++;
-            }
-            else
-            {
-                count--;
-            }
-            if(count < 0)
-            {
-                return false;
-            }
-        }
-        if(count == 0)
-        {
-            return true;
-        }
-        return false;
-    }
-    void find(string& s, int n)
+    void find(string& s, int n, int open, int close)
     {
         if(s.length() == 2*n)
         {
-            if(isValid(s) == true)
-            {
-                result.push_back(s);
-            }
+            result.push_back(s);
             return;
         }
-        s.push_back('(');
-        find(s,n);
-        s.pop_back();
-        s.push_back(')');
-        find(s,n);
-        s.pop_back();
+        if(close > open)
+        {
+            return;
+        }
+        if(open > n)
+        {
+            return;
+        }
+        if(open < n)
+        {
+            s.push_back('(');
+            find(s,n,open+1,close);
+            s.pop_back();
+        }
+        if(close < open)
+        {
+            s.push_back(')');
+            find(s,n,open,close+1);
+            s.pop_back();
+        }
     }
     vector<string> generateParenthesis(int n) {
         string s = "";
-        find(s,n);
+        int open = 0;
+        int close = 0;
+        find(s,n,open,close);
         return result;
     }
 };

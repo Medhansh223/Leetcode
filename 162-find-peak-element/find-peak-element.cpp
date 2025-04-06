@@ -24,10 +24,6 @@ public:
                 ele=i;
             }
         }
-        if(nums[n-1]>maxi)
-        {
-            ele=n-1;
-        }
         return ele;
     }
 };

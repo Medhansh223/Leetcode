@@ -1,11 +1,11 @@
 class Solution {
 public:
-    void bfs(int& time, queue<pair<pair<int,int>,int>>& q, vector<vector<int>>& visited, vector<vector<int>>& grid)
+    void bfs(queue<pair<pair<int,int>,int>>&q,vector<vector<int>>&vis,vector<vector<int>>&grid,int &time)
     {
+        int row[4]={+1,0,-1,0};
+        int col[4]={0,+1,0,-1};
         int n=grid.size();
         int m=grid[0].size();
-        vector<int>drow={-1,0,+1,0};
-        vector<int>dcol={0,+1,0,-1};
         while(!q.empty())
         {
             int r=q.front().first.first;
@@ -15,12 +15,12 @@ public:
             q.pop();
             for(int i=0;i<4;i++)
             {
-                int row=r+drow[i];
-                int col=c+dcol[i];
-                if(row>=0 && row<n && col>=0 && col<m && grid[row][col]==1 && visited[row][col]!=2)
+                int nrow=r+row[i];
+                int ncol=c+col[i];
+                if(nrow>=0 && ncol>=0 && nrow<n && ncol<m && vis[nrow][ncol]!=2 && grid[nrow][ncol]==1)
                 {
-                    q.push({{row,col},t+1});
-                    visited[row][col]=2;
+                    vis[nrow][ncol]=2;
+                    q.push({{nrow,ncol},t+1});
                 }
             }
         }
@@ -28,26 +28,26 @@ public:
     int orangesRotting(vector<vector<int>>& grid) {
         int n=grid.size();
         int m=grid[0].size();
-        vector<vector<int>>visited(n,vector<int>(m));
+        vector<vector<int>>vis(n,vector<int>(m));
+        int time=0;
         queue<pair<pair<int,int>,int>>q;
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
-                if(grid[i][j]==2 && visited[i][j]!=2)
-                {   
+                if(grid[i][j]==2)
+                {
                     q.push({{i,j},0});
-                    visited[i][j]=2;
+                    vis[i][j]=2;
                 }
             }
         }
-        int time=0;
-        bfs(time,q,visited,grid);
+        bfs(q,vis,grid,time);
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
-                if(grid[i][j]==1 && visited[i][j]!=2)
+                if(grid[i][j]==1 && vis[i][j]!=2)
                 {
                     return -1;
                 }

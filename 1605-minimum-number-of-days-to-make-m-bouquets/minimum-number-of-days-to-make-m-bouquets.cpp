@@ -18,7 +18,7 @@ public:
             }
         }
         blooms=blooms+(long long int)floor((count/k));
-        return blooms>=m;
+        return blooms;
     }
     int minDays(vector<int>& bloomDay, int m, int k) {
         int n=bloomDay.size();
@@ -39,7 +39,8 @@ public:
         while(low<=high)
         {
             int mid=(low+high)/2;
-            if(func(bloomDay,mid,m,k))
+            int bloom = func(bloomDay,mid,m,k);
+            if(bloom>=m)
             {
                 ans=mid;
                 high=mid-1;

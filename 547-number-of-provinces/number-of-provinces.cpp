@@ -1,14 +1,21 @@
 class Solution {
 public:
-    void dfs(int element, vector<int>& visited, vector<vector<int>>& adj)
+    void bfs(int node,vector<int>&vis,vector<vector<int>>&adj)
     {
-        int n=adj.size();
-        visited[element]=1;
-        for(auto adjacentnode: adj[element])
+        vis[node]=1;
+        queue<int>q;
+        q.push(node);
+        while(!q.empty())
         {
-            if(!visited[adjacentnode])
-            {     
-                dfs(adjacentnode,visited,adj);        
+            int ele=q.front();
+            q.pop();
+            for(auto it:adj[ele])
+            {
+                if(!vis[it])
+                {
+                    q.push(it);
+                    vis[it]=1;
+                }
             }
         }
     }
@@ -19,23 +26,28 @@ public:
         {
             for(int j=0;j<n;j++)
             {
-                if(isConnected[i][j]==1 && i!=j)
+                if(isConnected[i][j]==1)
                 {
                     adj[i].push_back(j);
                     adj[j].push_back(i);
                 }
             }
         }
-        vector<int>visited(n,0);
+        vector<int>vis(n);
         int count=0;
         for(int i=0;i<n;i++)
         {
-            if(!visited[i])
+            if(!vis[i])
             {
                 count++;
-                dfs(i,visited,adj);
+                bfs(i,vis,adj);
             }
         }
         return count;
     }
 };
+
+// 1 2 3
+// [1 1 0] 1
+// [1 1 0] 2
+// [0 0 1] 3

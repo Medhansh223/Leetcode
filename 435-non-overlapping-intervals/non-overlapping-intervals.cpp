@@ -2,7 +2,14 @@ class Solution {
 public:
     static bool comp(vector<int>&a,vector<int>&b)
     {
-        return a[1]<b[1];
+        if(a[1]==b[1])
+        {
+            return a[0] < b[0];
+        }
+        else
+        {
+            return a[1] < b[1];
+        }    
     }
     int eraseOverlapIntervals(vector<vector<int>>& intervals) {
         int n=intervals.size();

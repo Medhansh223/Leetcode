@@ -32,6 +32,7 @@ public:
                 dp[i][j]=min(up,ld);
             }
         }
+        // return *min_element(dp[n - 1].begin(), dp[n - 1].begin() + n);
         int s=dp[n-1].size();
         for(int i=0;i<s;i++)
         {   
@@ -39,10 +40,36 @@ public:
         }
         return mini;
     }
+    int space(vector<int>& prev, vector<vector<int>>& triangle)
+    {
+        prev[0]=triangle[0][0];
+        for(int i=1;i<triangle.size();i++)
+        {
+            vector<int>temp(triangle.size(),-1);
+            for(int j=0;j<=i;j++)
+            {
+                int up = INT_MAX;
+                int ld = INT_MAX;
+                if(j<i)
+                {
+                    up = triangle[i][j] + prev[j];
+                }
+                if(j>0)
+                {
+                    ld = triangle[i][j] + prev[j-1];
+                }
+                temp[j] = min(up,ld);
+            }
+            prev = temp;
+        }
+        return *min_element(prev.begin(),prev.end());
+    }
     int minimumTotal(vector<vector<int>>& triangle) {
         int n=triangle.size();
-        vector<vector<int>>dp(n,vector<int>(n,-1));
+        // vector<vector<int>>dp(n,vector<int>(n,-1));
         // return memo(0,0,dp,triangle);
-        return tabu(dp,triangle);
+        // return tabu(dp,triangle);
+        vector<int>dp(n,-1);
+        return space(dp,triangle);
     }
 };

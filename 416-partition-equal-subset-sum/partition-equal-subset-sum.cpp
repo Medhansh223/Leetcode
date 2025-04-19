@@ -1,81 +1,28 @@
 class Solution {
 public:
-    bool memoization(int n, int target, vector<vector<int>>& dp, vector<int>& nums)
+    int memo(int n, vector<vector<int>>& dp, vector<int>& nums, int target)
     {
-        if(target==0)
+        if(target == 0)
         {
             return true;
         }
-        if(n==0)
+        if(n == 0)
         {
-            return nums[0]==target;
+            return nums[0] == target;
         }
-        if(dp[n][target]!=-1)
+        if(dp[n][target] != -1)
         {
             return dp[n][target];
         }
-        bool not_pick = memoization(n-1,target,dp,nums);
+        bool non_pick = memo(n-1,dp,nums,target);
         bool pick = false;
-        if(nums[n]<=target)
+        if(nums[n] <= target)
         {
-            pick = memoization(n-1,target-nums[n],dp,nums);
+            pick = memo(n-1,dp,nums,target - nums[n]);
         }
-        dp[n][target] = pick || not_pick;
+        dp[n][target] = pick || non_pick;
         return dp[n][target];
     }
-
-    bool tabulation(int n, int k, vector<vector<bool>>& dp, vector<int>& nums)
-    {
-        for(int i=0;i<n;i++)
-        {
-            dp[i][0]=true;
-        }
-        if(nums[0]<=k)
-        {
-            dp[0][nums[0]]=true;
-        }
-        for(int i=1;i<n;i++)
-        {
-            for(int target=1;target<=k;target++)
-            {
-                bool not_pick = dp[i-1][target];
-                bool pick = false;
-                if(nums[i]<=target)
-                {
-                    pick = dp[i-1][target-nums[i]];
-                }
-                dp[i][target] = pick || not_pick;
-            }
-        }
-        return dp[n-1][k];
-    }
-
-    bool optimisation(int n, int k, vector<bool>& prev, vector<int>& nums)
-    {
-        prev[0]=true;
-        if(nums[0]<=k)
-        {
-            prev[nums[0]]=true;
-        }
-        for(int i=1;i<n;i++)
-        {
-            vector<bool>curr(k+1,false);
-            curr[0]=true;
-            for(int target=1;target<=k;target++)
-            {
-                bool not_pick = prev[target];
-                bool pick = false;
-                if(nums[i]<=target)
-                {
-                    pick = prev[target-nums[i]];
-                }
-                curr[target] = pick || not_pick;
-            }
-            prev = curr;
-        }
-        return prev[k];
-    }
-
     bool canPartition(vector<int>& nums) {
         int n = nums.size();
         int sum = 0;
@@ -87,14 +34,8 @@ public:
         {
             return false;
         }
-        int target = sum/2;
-        // vector<vector<int>>dp(n,vector<int>(target+1,-1));
-        // return memoization(n-1,target,dp,nums);
-
-        // vector<vector<bool>>dp(n,vector<bool>(target+1,false));
-        // return tabulation(n,target,dp,nums);
-
-        vector<bool>prev(target+1,false);
-        return optimisation(n,target,prev,nums);
+        int target = (sum/2);
+        vector<vector<int>>dp(n,vector<int>(target+1,-1));
+        return memo(n-1,dp,nums,target);
     }
 };

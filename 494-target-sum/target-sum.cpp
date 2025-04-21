@@ -56,6 +56,37 @@ public:
         }
         return dp[n-1][sum];
     }
+    int space(int n, vector<int>& prev, vector<int>& nums, int sum)
+    {
+        if(nums[0] == 0)
+        {
+            prev[0] = 2;
+        }
+        else
+        {
+            prev[0] = 1;
+        }
+        if(nums[0] != 0 && nums[0] <= sum)
+        {
+            prev[nums[0]] = 1;
+        }
+        for(int i=1;i<n;i++)
+        {
+            vector<int>temp(sum+1,0);
+            for(int j=0;j<=sum;j++)
+            {
+                int nonpick = prev[j];
+                int pick = 0;
+                if(nums[i] <= j)
+                {
+                    pick = prev[j - nums[i]];
+                }
+                temp[j] = nonpick + pick;
+            }
+            prev = temp;
+        }
+        return prev[sum];
+    }
     int findTargetSumWays(vector<int>& nums, int target) {
         int n = nums.size();
         int total = 0;
@@ -71,7 +102,10 @@ public:
         // vector<vector<int>>dp(n,vector<int>(sum+1,-1));
         // return memo(n-1,dp,nums,sum);
 
-        vector<vector<int>>dp(n,vector<int>(sum+1,0));
-        return tabu(n,dp,nums,sum);
+        // vector<vector<int>>dp(n,vector<int>(sum+1,0));
+        // return tabu(n,dp,nums,sum);
+
+        vector<int>dp(sum+1,0);
+        return space(n,dp,nums,sum);
     }
 };

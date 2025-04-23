@@ -42,7 +42,7 @@ public:
     {
         for(int i=1;i<=n;i++)
         {
-            vector<int>temp(n+1,0);
+            vector<int>temp(m+1,0);
             for(int j=1;j<=m;j++)
             {
                 if(s1[i-1]==s2[j-1])
@@ -66,11 +66,11 @@ public:
         // vector<vector<int>>dp(n,vector<int>(m,-1));
         // int ans = memo(n-1,m-1,dp,word1,word2);
 
-        vector<vector<int>>dp(n+1,vector<int>(m+1,0));
-        int ans = tabu(n,m,dp,word1,word2);
+        // vector<vector<int>>dp(n+1,vector<int>(m+1,0));
+        // int ans = tabu(n,m,dp,word1,word2);
 
-        // vector<int>dp(m+1,0);
-        // int ans = space(n,m,dp,word1,word2);
+        vector<int>dp(m+1,0);
+        int ans = space(n,m,dp,word1,word2);
         return (n-ans) + (m-ans);
     }
 };

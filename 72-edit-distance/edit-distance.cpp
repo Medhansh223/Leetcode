@@ -53,13 +53,44 @@ public:
         }
         return dp[n][m];
     }
+    int space(int n, int m, vector<int>& prev, string word1, string word2)
+    {
+        for(int j=0;j<=m;j++)
+        {
+            prev[j] = j;
+        }
+        for(int i=1;i<=n;i++)
+        {
+            vector<int>temp(m+1,-1);
+            temp[0] = i;
+            for(int j=1;j<=m;j++)
+            {
+                if(word1[i-1] == word2[j-1])
+                {
+                    temp[j] = prev[j-1];
+                }
+                else
+                {
+                    int insert = temp[j-1];
+                    int del = prev[j];
+                    int replace = prev[j-1];
+                    temp[j] = 1 + min({insert,del,replace});
+                }
+            }
+            prev = temp;
+        }
+        return prev[m];
+    }
     int minDistance(string word1, string word2) {
         int n = word1.size();
         int m = word2.size();
         // vector<vector<int>>dp(n,vector<int>(m,-1));
         // return memo(n-1,m-1,dp,word1,word2);
 
-        vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
-        return tabu(n,m,dp,word1,word2);
+        // vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
+        // return tabu(n,m,dp,word1,word2);
+
+        vector<int>dp(m+1,-1);
+        return space(n,m,dp,word1,word2);
     }
 };

@@ -59,11 +59,48 @@ public:
         }
         return dp[0][1][2];
     }
+    int space(int n,vector<vector<int>>&dp,vector<int>&prices) //n*(2*3)
+    {
+        for(int i=0;i<2;i++)
+        {
+            dp[i][0]=0;
+        }
+        for(int i=0;i<2;i++)
+        {
+            for(int j=0;j<3;j++)
+            {
+                dp[i][j]=0;
+            }
+        }
+        for(int i=n-1;i>=0;i--)
+        {
+            vector<vector<int>>temp(2,vector<int>(3,0));
+            for(int j=0;j<2;j++)
+            {
+                for(int k=1;k<3;k++)
+                {
+                    int profit=INT_MIN;
+                    if(j==1)
+                    {
+                        profit=max(-prices[i]+dp[0][k],dp[1][k]);
+                    }else
+                    {
+                        profit=max(prices[i]+dp[1][k-1],dp[0][k]);
+                    }
+                    temp[j][k]=profit;
+                }
+            }
+            dp=temp;
+        }
+        return dp[1][2];
+    }
     int maxProfit(vector<int>& prices) {
         int n=prices.size();
         // vector<vector<vector<int>>>dp(n,vector<vector<int>>(2,vector<int>(3,-1)));
         // return memo(0,1,2,dp,prices);
-        vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(3,-1)));
-        return tabu(n,dp,prices);
+        // vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(3,-1)));
+        // return tabu(n,dp,prices);
+        vector<vector<int>>dp(2,vector<int>(3,-1));
+        return space(n,dp,prices);
     }
 };

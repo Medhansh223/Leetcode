@@ -45,13 +45,39 @@ public:
         }
         return dp[0][1];
     }
-
+    int space(int n, vector<int>& ahead1, vector<int>& prices)
+    {
+        vector<int>temp(2,0);
+        vector<int>ahead2(2,0);
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int j=0;j<=1;j++)
+            {
+                int profit = 0;
+                if(j == 1)
+                {
+                    profit = max(-prices[i] + ahead1[0], ahead1[1]);
+                }
+                else
+                {
+                    profit = max(prices[i] + ahead2[1], ahead1[0]);
+                }
+                temp[j] = profit;
+            }
+            ahead2 = ahead1;
+            ahead1 = temp;
+        }
+        return temp[1];
+    }
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
         // vector<vector<int>>dp(n,vector<int>(2,-1));
         // return memo(0,1,dp,prices);
 
-        vector<vector<int>>dp(n+2,vector<int>(2,-1));
-        return tabu(n,dp,prices);
+        // vector<vector<int>>dp(n+2,vector<int>(2,-1));
+        // return tabu(n,dp,prices);
+
+        vector<int>dp(2,0);
+        return space(n,dp,prices);
     }
 };

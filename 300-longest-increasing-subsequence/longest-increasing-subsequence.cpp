@@ -37,12 +37,34 @@ public:
         }
         return dp[0][0];
     }
+    int space(int n, vector<int>& nums, vector<int>& dp)
+    {
+        for(int i=n-1;i>=0;i--)
+        {
+            vector<int>temp(n+1,0);
+            for(int j=i-1;j>=-1;j--)
+            {
+                int not_take = dp[j+1];
+                int take = INT_MIN;
+                if(j == -1 || nums[j] < nums[i])
+                {
+                    take = 1 + dp[i+1];
+                }
+                temp[j+1] = max(not_take,take);
+            }
+            dp = temp;
+        }
+        return dp[0];
+    }
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
         // vector<vector<int>>dp(n,vector<int>(n+1,-1));
         // return memo(0,-1,nums,dp);
 
-        vector<vector<int>>dp(n+1,vector<int>(n+1,0));
-        return tabu(n,nums,dp);
+        // vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        // return tabu(n,nums,dp);
+
+        vector<int>dp(n+1,0);
+        return space(n,nums,dp);
     }
 };

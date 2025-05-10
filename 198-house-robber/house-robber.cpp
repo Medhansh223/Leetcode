@@ -19,9 +19,25 @@ public:
         dp[i] = max(pick,not_pick);
         return dp[i];
     }
+    int tabu(int n, vector<int>& dp, vector<int>& nums)
+    {
+        dp[0] = nums[0];
+        for(int i=1;i<n;i++)
+        {
+            int not_pick = dp[i-1];
+            int pick = nums[i];
+            if(i >= 2)
+            {
+                pick = pick + dp[i-2];
+            }
+            dp[i] = max(pick,not_pick);
+        }
+        return dp[n-1];
+    }
     int rob(vector<int>& nums) {
         int n = nums.size();
         vector<int>dp(n,-1);
         return memo(n-1,dp,nums);
+        return tabu(n,dp,nums);
     }
 };

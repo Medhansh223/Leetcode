@@ -54,13 +54,46 @@ public:
         }
         return dp[n-1][amount];
     }
+    int space(int n, int amount, vector<int>& dp, vector<int>& coins)
+    {
+        for(int i=0;i<=amount;i++)
+        {
+            if(i % coins[0] == 0)
+            {
+                dp[i] = i / coins[0];
+            }
+            else
+            {
+                dp[i] = 1e9;
+            }
+        }
+        for(int i=1;i<n;i++)
+        {
+            vector<int>temp(amount+1,0);
+            for(int j=0;j<=amount;j++)
+            {
+                int not_pick = dp[j];
+                int pick = INT_MAX;
+                if(coins[i] <= j)
+                {
+                    pick = 1 + temp[j - coins[i]];
+                }
+                temp[j] = min(pick,not_pick);
+            }
+            dp = temp;
+        }
+        return dp[amount];
+    }
     int coinChange(vector<int>& coins, int amount) {
         int n = coins.size();
         // vector<vector<int>>dp(n,vector<int>(amount+1,-1));
         // int ans = memo(n-1,amount,dp,coins);
 
-        vector<vector<int>>dp(n,vector<int>(amount+1,0));
-        int ans = tabu(n,amount,dp,coins);
+        // vector<vector<int>>dp(n,vector<int>(amount+1,0));
+        // int ans = tabu(n,amount,dp,coins);
+
+        vector<int>dp(amount+1,0);
+        int ans = space(n,amount,dp,coins);
 
         if(ans == 1e9)
         {

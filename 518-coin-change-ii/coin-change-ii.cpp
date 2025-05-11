@@ -26,33 +26,33 @@ public:
         dp[i][amount] = pick + not_pick;
         return dp[i][amount];
     }
-    int tabu(int n, int amount, vector<vector<int>>& dp, vector<int>& coins)
+    int tabu(int n, int amount, vector<vector<long long>>& dp, vector<int>& coins)
     {
         for(int i=0;i<=amount;i++)
         {
             if(i % coins[0] == 0)
             {
-                dp[0][i] = i / coins[0];
+                dp[0][i] = 1;
             }
             else
             {
-                dp[0][i] = 1e9;
+                dp[0][i] = 0;
             }
         }
         for(int i=1;i<n;i++)
         {
             for(int j=0;j<=amount;j++)
             {
-                int not_pick = dp[i-1][j];
-                int pick = INT_MAX;
+                long long not_pick = dp[i-1][j];
+                long long pick = 0;
                 if(coins[i] <= j)
                 {
-                    pick = 1 + dp[i][j - coins[i]];
+                    pick = dp[i][j - coins[i]];
                 }
-                dp[i][j] = min(pick,not_pick);
+                dp[i][j] = (int)pick + not_pick;
             }
         }
-        return dp[n-1][amount];
+        return (int)dp[n-1][amount];
     }
     int space(int n, int amount, vector<int>& dp, vector<int>& coins)
     {
@@ -60,11 +60,11 @@ public:
         {
             if(i % coins[0] == 0)
             {
-                dp[i] = i / coins[0];
+                dp[i] = 1;
             }
             else
             {
-                dp[i] = 1e9;
+                dp[i] = 0;
             }
         }
         for(int i=1;i<n;i++)
@@ -73,12 +73,12 @@ public:
             for(int j=0;j<=amount;j++)
             {
                 int not_pick = dp[j];
-                int pick = INT_MAX;
+                int pick = 0;
                 if(coins[i] <= j)
                 {
-                    pick = 1 + temp[j - coins[i]];
+                    pick = temp[j - coins[i]];
                 }
-                temp[j] = min(pick,not_pick);
+                temp[j] = pick + not_pick;
             }
             dp = temp;
         }
@@ -86,11 +86,11 @@ public:
     }
     int change(int amount, vector<int>& coins) {
         int n = coins.size();
-        vector<vector<int>>dp(n,vector<int>(amount+1,-1));
-        return memo(n-1,amount,dp,coins);
+        // vector<vector<int>>dp(n,vector<int>(amount+1,-1));
+        // return memo(n-1,amount,dp,coins);
 
-        // vector<vector<int>>dp(n,vector<int>(amount+1,0));
-        // int ans = tabu(n,amount,dp,coins);
+        vector<vector<long long>>dp(n,vector<long long>(amount+1,0));
+        return tabu(n,amount,dp,coins);
 
         // vector<int>dp(amount+1,0);
         // int ans = space(n,amount,dp,coins);

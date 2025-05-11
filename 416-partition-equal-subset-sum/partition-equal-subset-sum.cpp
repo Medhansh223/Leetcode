@@ -27,6 +27,35 @@ public:
         dp[i][target] = pick || not_pick;
         return dp[i][target];
     }
+    bool tabu(int n, int target, vector<vector<int>>& dp, vector<int>& nums)
+    {
+        if(nums[0] == 0)
+        {
+            dp[0][0] = true;
+        }
+        else
+        {
+            dp[0][0] = true;
+        }
+        if(nums[0] != 0 && nums[0] <= target)
+        {
+            dp[0][nums[0]] = true;
+        }
+        for(int i=1;i<n;i++)
+        {
+            for(int j=0;j<=target;j++)
+            {
+                bool not_pick = dp[i-1][j];
+                bool pick = false;
+                if(nums[i] <= j)
+                {
+                    pick = dp[i-1][j - nums[i]];
+                }
+                dp[i][j] = pick || not_pick;
+            }
+        }
+        return dp[n-1][target];
+    }
     bool canPartition(vector<int>& nums) {
         int n = nums.size();
         int sum = 0;
@@ -39,11 +68,11 @@ public:
             return false;
         }
         int target = sum / 2;
-        vector<vector<int>>dp(n,vector<int>(target+1,-1));
-        return memo(n-1,target,dp,nums);
+        // vector<vector<int>>dp(n,vector<int>(target+1,-1));
+        // return memo(n-1,target,dp,nums);
 
-        // vector<vector<int>>dp(n,vector<int>(target+1,false));
-        // return memo(n,target,dp,nums);
+        vector<vector<int>>dp(n,vector<int>(target+1,false));
+        return tabu(n,target,dp,nums);
 
         // vector<int>dp(target+1,false);
         // return memo(n,target,dp,nums);

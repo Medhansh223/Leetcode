@@ -99,11 +99,11 @@ public:
             return 0;
         }
         int sum = (total - target) / 2;
-        vector<vector<int>>dp(n,vector<int>(sum+1,-1));
-        return memo(n-1,dp,nums,sum);
+        // vector<vector<int>>dp(n,vector<int>(sum+1,-1));
+        // return memo(n-1,dp,nums,sum);
 
-        // // vector<vector<int>>dp(n,vector<int>(sum+1,0));
-        // // return tabu(n,dp,nums,sum);
+        vector<vector<int>>dp(n,vector<int>(sum+1,0));
+        return tabu(n,dp,nums,sum);
 
         // vector<int>dp(sum+1,0);
         // return space(n,dp,nums,sum);

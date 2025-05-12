@@ -76,19 +76,16 @@ public:
     }
     int longestPalindromeSubseq(string s) {
         int n = s.size();
-        string t = "";
-        for(int i=n-1;i>=0;i--)
-        {
-            t = t + s[i];
-        }
+        string t = s;
+        reverse(t.begin(),t.end());
         int m = t.size();
         // vector<vector<int>>dp(n,vector<int>(m,-1));
         // return memo(n-1,m-1,dp,s,t);
 
-        // vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
-        // return tabu(n,m,dp,s,t);
+        vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
+        return tabu(n,m,dp,s,t);
 
-        vector<int>dp(m+1,-1);
-        return space(n,m,dp,s,t);
+        // vector<int>dp(m+1,-1);
+        // return space(n,m,dp,s,t);
     }
 };

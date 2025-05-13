@@ -47,6 +47,33 @@ public:
         }
         return dp[n][m];
     }
+    int space(int n, int m, string s, string t, vector<int>& dp)
+    {
+        for(int i=0;i<=m;i++)
+        {
+            dp[i]=0;
+        }
+        for(int i=1;i<=m;i++)
+        {
+            vector<int>temp(m+1,-1);
+            temp[0] = 0;
+            for(int j=1;j<=n;j++)
+            {
+                if(s[i-1] == t[j-1])
+                {
+                    temp[j] = 1 + dp[j-1];
+                }
+                else
+                {
+                    int left =temp[j-1];
+                    int top = dp[j];
+                    temp[j] = max(left,top);
+                }
+            }
+            dp = temp;
+        }
+        return dp[m];
+    }
     int minInsertions(string s) {
         int n = s.size();
         string t = s;
@@ -55,7 +82,10 @@ public:
         // vector<vector<int>>dp(n,vector<int>(m,-1));
         // return n - memo(n-1,m-1,s,t,dp);
 
-        vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
-        return n - tabu(n,m,s,t,dp);
+        // vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
+        // return n - tabu(n,m,s,t,dp);
+
+        vector<int>dp(m+1,-1);
+        return n - space(n,m,s,t,dp);
     }
 };

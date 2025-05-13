@@ -63,14 +63,14 @@ public:
     int minDistance(string word1, string word2) {
         int n = word1.size();
         int m = word2.size();
-        // vector<vector<int>>dp(n,vector<int>(m,-1));
-        // int ans = memo(n-1,m-1,dp,word1,word2);
+        vector<vector<int>>dp(n,vector<int>(m,-1));
+        int ans = memo(n-1,m-1,dp,word1,word2);
 
         // vector<vector<int>>dp(n+1,vector<int>(m+1,0));
         // int ans = tabu(n,m,dp,word1,word2);
 
-        vector<int>dp(m+1,0);
-        int ans = space(n,m,dp,word1,word2);
+        // vector<int>dp(m+1,0);
+        // int ans = space(n,m,dp,word1,word2);
         return (n-ans) + (m-ans);
     }
 };

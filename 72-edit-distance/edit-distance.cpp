@@ -87,10 +87,10 @@ public:
         // vector<vector<int>>dp(n,vector<int>(m,-1));
         // return memo(n-1,m-1,dp,word1,word2);
 
-        vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
-        return tabu(n,m,dp,word1,word2);
+        // vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
+        // return tabu(n,m,dp,word1,word2);
 
-        // vector<int>dp(m+1,-1);
-        // return space(n,m,dp,word1,word2);
+        vector<int>dp(m+1,-1);
+        return space(n,m,dp,word1,word2);
     }
 };

@@ -2,10 +2,10 @@ class Solution {
 public:
     int bagOfTokensScore(vector<int>& tokens, int power) {
         int n = tokens.size();
+        int score = 0;
         sort(tokens.begin(),tokens.end());
         int left = 0;
         int right = n-1;
-        int score = 0;
         int maxscore = 0;
         while(left <= right)
         {

@@ -1,41 +1,39 @@
 class Solution {
 public:
-    vector<int>generate_left_max(vector<int>& height)
+    vector<int>generate_leftmax(vector<int>height)
     {
-        int n = height.size();
+        int n=height.size();
         vector<int>leftmax(n);
-        leftmax[0] = height[0];
+        leftmax[0]=height[0];
         for(int i=1;i<n;i++)
         {
-            leftmax[i] = max(leftmax[i-1],height[i]);
+            leftmax[i]=max(leftmax[i-1],height[i]);
         }
         return leftmax;
     }
-
-    vector<int>generate_right_max(vector<int>& height)
+    vector<int>generate_rightmax(vector<int>height)
     {
-        int n = height.size();
+        int n=height.size();
         vector<int>rightmax(n);
-        rightmax[n-1] = height[n-1];
+        rightmax[n-1]=height[n-1];
         for(int i=n-2;i>=0;i--)
         {
-            rightmax[i] = max(rightmax[i+1],height[i]);
+            rightmax[i]=max(rightmax[i+1],height[i]);
         }
         return rightmax;
     }
-
     int trap(vector<int>& height) {
-        int n = height.size();
-        vector<int>leftmax = generate_left_max(height);
-        vector<int>rightmax = generate_right_max(height);
-        int water = 0;
+        int n=height.size();
+        vector<int>leftmax=generate_leftmax(height);
+        vector<int>rightmax=generate_rightmax(height);
+        int water=0;
         for(int i=0;i<n;i++)
         {
-            int w = 1;
-            int h = min(leftmax[i],rightmax[i]) - height[i];
-            if(h > 0)
+            int w=1;
+            int h=min(leftmax[i],rightmax[i])-height[i];
+            if(h>0)
             {
-                water = water + w*h;
+                water=water+w*h;
             }
         }
         return water;

@@ -9,21 +9,18 @@ public:
         }
         while(pq.size()>1)
         {
-            int first=pq.top();
+            int s1=pq.top();
             pq.pop();
-            int second=pq.top();
+            int s2=pq.top();
             pq.pop();
-            if(first==second)
+            if(s1==s2)
             {
                 continue;
             }
-            else if(first<second)
-            {
-                pq.push(second-first);
-            }
             else
             {
-                pq.push(first-second);
+                s1=s1-s2;
+                pq.push(s1);
             }
         }
         if(pq.size()==0)

@@ -1,47 +1,47 @@
 class Solution {
 public:
     int leastInterval(vector<char>& tasks, int n) {
-        vector<int>mpp(26,0);
-        for(auto ch:tasks)
-        {
-            mpp[ch - 'A']++;
-        }
+        unordered_map<char,int>mpp;
+        int s=tasks.size();
         priority_queue<int>pq;
-        for(int i=0;i<26;i++)
+        for(int i=0;i<s;i++)
         {
-            if(mpp[i]>0)
-            {
-                pq.push(mpp[i]);
-            }
+            mpp[tasks[i]]++;
         }
-        int time = 0;
+        for(auto &it:mpp)
+        {
+            int c=it.first;
+            int f=it.second;
+            pq.push(f);
+        }
+        int time=0;
         while(!pq.empty())
         {
             vector<int>temp;
-            for(int i=1;i<=(n+1);i++)
+            for(int i=1;i<=n+1;i++)
             {
                 if(!pq.empty())
                 {
-                    int freq = pq.top();
-                    pq.pop();
+                    int freq=pq.top();
                     freq--;
+                    pq.pop();
                     temp.push_back(freq);
                 }
             }
-            for(auto f:temp)
+            for(int &f:temp)
             {
-                if(f > 0)
+                if(f>0)
                 {
                     pq.push(f);
                 }
             }
             if(pq.empty())
             {
-                time = time + temp.size();
+                time=time+temp.size();
             }
             else
             {
-                time = time + (n+1);
+                time=time+(n+1);
             }
         }
         return time;

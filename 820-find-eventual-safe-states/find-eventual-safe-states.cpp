@@ -3,19 +3,13 @@ public:
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
         int n=graph.size();
         vector<vector<int>>adj(n);
+        vector<int>indegree(n);
         for(int i=0;i<n;i++)
         {
             for(auto it:graph[i])
             {
                 adj[it].push_back(i);
-            }
-        }
-        vector<int>indegree(n,0);
-        for(int i=0;i<n;i++)
-        {
-            for(auto it:adj[i])
-            {
-                indegree[it]++;
+                indegree[i]++;
             }
         }
         queue<int>q;
@@ -26,12 +20,12 @@ public:
                 q.push(i);
             }
         }
-        vector<int>ans;
+        vector<int>result;
         while(!q.empty())
         {
             int node=q.front();
             q.pop();
-            ans.push_back(node);
+            result.push_back(node);
             for(auto it:adj[node])
             {
                 indegree[it]--;
@@ -41,7 +35,7 @@ public:
                 }
             }
         }
-        sort(ans.begin(),ans.end());
-        return ans;
+        sort(result.begin(),result.end());
+        return result;
     }
 };

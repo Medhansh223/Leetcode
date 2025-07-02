@@ -11,36 +11,18 @@
  */
 class Solution {
 public:
-    vector<vector<int>> traversal(TreeNode* root)
+    void traversal(vector<int>&result, int level, TreeNode* root)
     {
-        vector<vector<int>>result;
         if(root == NULL)
         {
-            return result;
+            return ;
         }
-        queue<TreeNode*>q;
-        q.push(root);
-        while(!q.empty())
+        if(result.size() < level)
         {
-            int n = q.size();
-            vector<int>res;
-            for(int i=0;i<n;i++)
-            {
-                TreeNode* node = q.front();
-                q.pop();
-                res.push_back(node->val);
-                if(node->left != NULL)
-                {
-                    q.push(node->left);
-                }
-                if(node->right != NULL)
-                {
-                    q.push(node->right);
-                }
-            }
-            result.push_back(res);
+            result.push_back(root->val);
         }
-        return result;
+        traversal(result,level+1,root->right);
+        traversal(result,level+1,root->left);
     }
     vector<int> rightSideView(TreeNode* root) {
         vector<int>result;
@@ -48,11 +30,7 @@ public:
         {
             return result;
         }
-        vector<vector<int>>levelorder = traversal(root);
-        for(auto it:levelorder)
-        {
-            result.push_back(it.back());
-        }
+        traversal(result,1,root);
         return result;
     }
 };

@@ -11,23 +11,23 @@
  */
 class Solution {
 public:
-    bool isMirror(TreeNode* node1, TreeNode* node2)
+    bool isMirror(TreeNode* root1, TreeNode* root2)
     {
-        if(node1==NULL && node2==NULL)
+        if(root1==NULL && root2==NULL)
         {
             return true;
         }
-        if(node1==NULL || node2==NULL)
+        if(root1==NULL || root2==NULL)
         {
             return false;
         }
-        if(node1->val!=node2->val)
+        if(root1->val!=root2->val)
         {
             return false;
         }
         else
         {
-            return (isMirror(node1->left,node2->right) && isMirror(node1->right,node2->left));
+            return (isMirror(root1->left, root2->right) && isMirror(root1->right, root2->left));
         }
     }
     bool isSymmetric(TreeNode* root) {
@@ -35,6 +35,6 @@ public:
         {
             return true;
         }
-        return isMirror(root->left,root->right);
+        return isMirror(root->left, root->right);
     }
 };

@@ -16,25 +16,21 @@ public:
         {
             return;
         }
-        stack<TreeNode*>st;
-        st.push(root);
-        while(!st.empty())
+        TreeNode* curr=root;
+        while(curr!=NULL)
         {
-            TreeNode* node=st.top();
-            st.pop();
-            if(node->right!=NULL)
+            if(curr->left!=NULL)
             {
-                st.push(node->right);
+                TreeNode* prev=curr->left;
+                while(prev->right!=NULL)
+                {
+                    prev=prev->right;
+                }
+                prev->right=curr->right;
+                curr->right=curr->left;
+                curr->left=NULL;
             }
-            if(node->left!=NULL)
-            {
-                st.push(node->left);
-            }
-            if(!st.empty())
-            {
-                node->right=st.top();
-            }
-            node->left=NULL;
+            curr=curr->right;
         }
     }
 };

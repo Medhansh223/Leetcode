@@ -9,16 +9,16 @@ public:
             int wt=it[2];
             adj[u].push_back({v,wt});
         }
-        queue<pair<int,pair<int,int>>>q;
-        q.push({0,{src,0}});
+        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>>pq;
+        pq.push({0,{src,0}});
         vector<int>distance(n,INT_MAX);
         distance[src]=0;
-        while(!q.empty())
+        while(!pq.empty())
         {
-            int stops=q.front().first;
-            int node=q.front().second.first;
-            int dist=q.front().second.second;
-            q.pop();
+            int stops=pq.top().first;
+            int node=pq.top().second.first;
+            int dist=pq.top().second.second;
+            pq.pop();
             for(auto it:adj[node])
             {
                 int adjnode=it.first;
@@ -26,7 +26,7 @@ public:
                 if(dist+wt<distance[adjnode] && stops<=k)
                 {
                     distance[adjnode]=dist+wt;
-                    q.push({stops+1,{adjnode,distance[adjnode]}});
+                    pq.push({stops+1,{adjnode,distance[adjnode]}});
                 }
             }
         }

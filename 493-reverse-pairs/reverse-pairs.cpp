@@ -28,9 +28,9 @@ public:
             temp.push_back(nums[right]);
             right++;
         }
-        for(int i=low;i<=high;i++)
+        for(int i=0;i<temp.size();i++)
         {
-            nums[i] = temp[i-low];
+            nums[i+low] = temp[i];
         }
     }
     int countPairs(vector<int>& nums, int low, int mid, int high)

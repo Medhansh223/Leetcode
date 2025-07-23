@@ -2,43 +2,38 @@ class Solution {
 public:
     bool checkValidString(string s) {
         int n = s.length();
-        stack<int>open;
-        stack<int>ast;
+        int open = 0;
         for(int i=0;i<n;i++)
         {
-            if(s[i] == '(')
+            if(s[i] == '(' || s[i] == '*')
             {
-                open.push(i);
-            }
-            else if(s[i] == '*')
-            {
-                ast.push(i);
+                open++;
             }
             else
             {
-                if(!open.empty())
-                {
-                    open.pop();
-                }
-                else if(!ast.empty())
-                {
-                    ast.pop();
-                }
-                else
-                {
-                    return false;
-                }
+                open--;
             }
-        }
-        while(!open.empty() && !ast.empty())
-        {
-            if(open.top() > ast.top())
+            if(open < 0)
             {
                 return false;
             }
-            open.pop();
-            ast.pop();
         }
-        return open.empty();
+        int close = 0;
+        for(int i=n-1;i>=0;i--)
+        {
+            if(s[i] == ')' || s[i] == '*')
+            {
+                close++;
+            }
+            else
+            {
+                close--;
+            }
+            if(close < 0)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 };

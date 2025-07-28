@@ -1,107 +1,38 @@
 class Solution {
 public:
-    int memo(int i, int amount, vector<vector<int>>& dp, vector<int>& coins)
+    int memo(int ind,vector<vector<int>>&dp,vector<int>&coins,int amount)
     {
-        if(i == 0)
+        if(ind==0)
         {
-            if(amount % coins[i] == 0)
+            if(amount%coins[0]==0)
             {
-                return amount / coins[i];
+                return amount/coins[0];
             }
             else
             {
                 return 1e9;
             }
         }
-        if(dp[i][amount] != -1)
+        if(dp[ind][amount]!=-1)
         {
-            return dp[i][amount];
+            return dp[ind][amount];
         }
-        int not_pick = memo(i-1,amount,dp,coins);
-        int pick = INT_MAX;
-        if(coins[i] <= amount)
+        int nonpick=memo(ind-1,dp,coins,amount);
+        int pick=1e9;
+        if(coins[ind]<=amount)
         {
-            pick = 1 + memo(i,amount - coins[i],dp,coins);
+            pick=memo(ind,dp,coins,amount-coins[ind])+1;
         }
-        dp[i][amount] = min(pick,not_pick);
-        return dp[i][amount];
-    }
-    int tabu(int n, int amount, vector<vector<int>>& dp, vector<int>& coins)
-    {
-        for(int i=0;i<=amount;i++)
-        {
-            if(i % coins[0] == 0)
-            {
-                dp[0][i] = i / coins[0];
-            }
-            else
-            {
-                dp[0][i] = 1e9;
-            }
-        }
-        for(int i=1;i<n;i++)
-        {
-            for(int j=0;j<=amount;j++)
-            {
-                int not_pick = dp[i-1][j];
-                int pick = INT_MAX;
-                if(coins[i] <= j)
-                {
-                    pick = 1 + dp[i][j - coins[i]];
-                }
-                dp[i][j] = min(pick,not_pick);
-            }
-        }
-        return dp[n-1][amount];
-    }
-    int space(int n, int amount, vector<int>& dp, vector<int>& coins)
-    {
-        for(int i=0;i<=amount;i++)
-        {
-            if(i % coins[0] == 0)
-            {
-                dp[i] = i / coins[0];
-            }
-            else
-            {
-                dp[i] = 1e9;
-            }
-        }
-        for(int i=1;i<n;i++)
-        {
-            vector<int>temp(amount+1,0);
-            for(int j=0;j<=amount;j++)
-            {
-                int not_pick = dp[j];
-                int pick = INT_MAX;
-                if(coins[i] <= j)
-                {
-                    pick = 1 + temp[j - coins[i]];
-                }
-                temp[j] = min(pick,not_pick);
-            }
-            dp = temp;
-        }
-        return dp[amount];
+        return dp[ind][amount]=min(pick,nonpick);
     }
     int coinChange(vector<int>& coins, int amount) {
-        int n = coins.size();
-        // vector<vector<int>>dp(n,vector<int>(amount+1,-1));
-        // int ans = memo(n-1,amount,dp,coins);
-
-        // vector<vector<int>>dp(n,vector<int>(amount+1,0));
-        // int ans = tabu(n,amount,dp,coins);
-
-        vector<int>dp(amount+1,0);
-        int ans = space(n,amount,dp,coins);
-
-        if(ans == 1e9)
+        int n=coins.size();
+        vector<vector<int>>dp(n,vector<int>(amount+1,-1));
+        int ans=memo(n-1,dp,coins,amount);
+        if(ans==1e9)
         {
             return -1;
         }
-        else
-        {
-            return ans;
-        }
+        return ans;
     }
 };

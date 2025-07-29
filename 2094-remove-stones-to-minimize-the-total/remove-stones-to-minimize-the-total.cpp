@@ -10,7 +10,7 @@ public:
         {
             int num = pq.top();
             pq.pop();
-            num = num - (num/2);
+            num = ceil((float)num/2);
             pq.push(num);
             k--;
         }

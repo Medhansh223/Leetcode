@@ -15,34 +15,34 @@ public:
         vector<vector<int>>result;
         if(root==NULL)
         {
-            return result;
+            return {};
         }
         queue<TreeNode*>q;
-        bool flag=true;
         q.push(root);
+        bool flag=true;
         while(!q.empty())
         {
-            int n=q.size();
-            vector<int>level;
-            for(int i=0;i<n;i++)
+            int s=q.size();
+            vector<int>temp;
+            for(int i=0;i<s;i++)
             {
-                TreeNode* node=q.front();
+                root=q.front();
                 q.pop();
-                if(node->left!=NULL)
+                temp.push_back(root->val);
+                if(root->left)
                 {
-                    q.push(node->left);
+                    q.push(root->left);
                 }
-                if(node->right!=NULL)
+                if(root->right)
                 {
-                    q.push(node->right);
+                    q.push(root->right);
                 }
-                level.push_back(node->val);
             }
-            if(flag==false)
+            if(!flag)
             {
-                reverse(level.begin(),level.end());
+                reverse(temp.begin(),temp.end());
             }
-            result.push_back(level);
+            result.push_back(temp);
             flag=!flag;
         }
         return result;

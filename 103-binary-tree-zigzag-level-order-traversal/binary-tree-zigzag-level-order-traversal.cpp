@@ -42,8 +42,8 @@ public:
             {
                 reverse(temp.begin(),temp.end());
             }
-            result.push_back(temp);
             flag=!flag;
+            result.push_back(temp);
         }
         return result;
     }

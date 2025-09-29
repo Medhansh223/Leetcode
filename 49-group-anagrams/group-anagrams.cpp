@@ -1,29 +1,28 @@
 class Solution {
 public:
-    string generate(string& str)
+    string generate(string &str)
     {
-        vector<int>hash(26,0);
-        int n = str.length();
-        for(int i=0;i<n;i++)
+        vector<int>freq(26,0);
+        for(int i=0;i<str.size();i++)
         {
             char ch = str[i];
-            hash[ch - 'a']++;
+            freq[ch - 'a']++;
         }
         string word = "";
         for(int i=0;i<26;i++)
         {
-            int freq = hash[i];
-            if(freq > 0)
+            int frequency = freq[i];
+            if(frequency > 0)
             {
-                word = word + string(freq,i + 'a');
+                word = word + string(frequency,i + 'a');
             }
         }
         return word;
     }
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        int n = strs.size();
-        map<string,vector<string>>mpp;
         vector<vector<string>>result;
+        map<string,vector<string>>mpp;
+        int n = strs.size();
         for(int i=0;i<n;i++)
         {
             string str = strs[i];

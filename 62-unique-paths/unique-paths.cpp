@@ -58,11 +58,41 @@ public:
         }
         return dp[m-1][n-1];
     }
+    int space(int m, int n, vector<int>& dp)
+    {
+        for(int i=0;i<m;i++)
+        {
+            vector<int>temp(n,-1);
+            for(int j=0;j<n;j++)
+            {
+                if(i == 0 && j == 0)
+                {
+                    temp[j] = 1;
+                    continue;
+                }
+                int left = 0;
+                if(j > 0)
+                {
+                    left = temp[j-1];
+                }
+                int up = 0;
+                if(i > 0)
+                {
+                    up = dp[j];
+                }
+                temp[j] = left + up;
+            }
+            dp = temp;
+        }
+        return dp[n-1];
+    }
     int uniquePaths(int m, int n) {
         // return recur(m-1,n-1);
         // vector<vector<int>>dp(m,vector<int>(n,-1));
         // return memo(m-1,n-1,dp);
-        vector<vector<int>>dp(m,vector<int>(n,-1));
-        return tabu(m,n,dp);
+        // vector<vector<int>>dp(m,vector<int>(n,-1));
+        // return tabu(m,n,dp);
+        vector<int>dp(n,-1);
+        return space(m,n,dp);
     }
 };

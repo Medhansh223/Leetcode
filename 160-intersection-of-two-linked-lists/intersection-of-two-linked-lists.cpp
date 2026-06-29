@@ -9,56 +9,26 @@
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        if(headA == NULL || headB == NULL)
+        ListNode* tempA=headA;
+        ListNode* tempB=headB;
+        if(headA==NULL || headB==NULL)
         {
             return NULL;
         }
-        int countA = 0;
-        ListNode* tempA = headA;
-        while(tempA != NULL)
+        map<ListNode*,int>mpp;
+        while(tempA!=NULL)
         {
-            countA++;
-            tempA = tempA->next;
+            mpp[tempA]=1;
+            tempA=tempA->next;
         }
-        int countB = 0;
-        ListNode* tempB = headB;
-        while(tempB != NULL)
+        while(tempB!=NULL)
         {
-            countB++;
-            tempB = tempB->next;
-        }
-        tempA = headA;
-        tempB = headB;
-        int diff = countA - countB;
-        if(diff > 0)
-        {
-            tempA = headA;
-            tempB = headB;
-            while(diff > 0)
+            if(mpp.find(tempB)!=mpp.end())
             {
-                diff--;
-                tempA = tempA->next;
+                return tempB;
             }
-        }
-        else
-        {
-            int newdiff = abs(diff);
-            tempA = headA;
-            tempB = headB;
-            while(newdiff > 0)
-            {
-                newdiff--;
-                tempB = tempB->next;
-            }
-        }
-        while(tempA!=NULL && tempB!=NULL)
-        {
-            if(tempA == tempB)
-            {
-                return tempA;
-            }
-            tempA = tempA->next;
-            tempB = tempB->next;
+            mpp[tempB]=1;
+            tempB=tempB->next;
         }
         return NULL;
     }

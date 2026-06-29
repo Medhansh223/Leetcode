@@ -15,21 +15,10 @@ public:
         {
             return head;
         }
-        ListNode* temp = head->next;
-        ListNode* move = temp->next;
+        ListNode* newhead = reverseList(head->next);
+        ListNode* front = head->next;
+        front->next = head;
         head->next = NULL;
-        while(move != NULL)
-        {
-            temp->next = head;
-            head = temp;
-            temp = move;
-            if(move!= NULL) 
-            {
-                move = move->next;
-            }
-        }
-        temp->next = head;
-        head = temp;
-        return head;
+        return newhead;
     }
 };

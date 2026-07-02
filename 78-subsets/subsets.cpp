@@ -1,21 +1,22 @@
 class Solution {
 public:
-    vector<vector<int>> subsets(vector<int>& nums) {
-        vector<vector<int>>result;
-        int n=nums.size();
-        int subsets=1<<n;
-        for(int num=0;num<subsets;num++)
+    void recurr(vector<vector<int>>&result,vector<int>&nums,int i,vector<int>&temp)
+    {
+        result.push_back(temp);
+        for(int j=i;j<nums.size();j++)
         {
-            vector<int>list;
-            for(int i=0;i<n;i++)
-            {
-                if(num & (1<<i))
-                {
-                    list.push_back(nums[i]);
-                }
-            }
-            result.push_back(list);
+            temp.push_back(nums[j]);
+            recurr(result,nums,j+1,temp);
+            temp.pop_back();
         }
+    }
+
+    vector<vector<int>> subsets(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>>result;
+        vector<int>temp;
+        sort(nums.begin(),nums.end());
+        recurr(result,nums,0,temp);
         return result;
     }
 };

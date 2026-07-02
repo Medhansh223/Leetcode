@@ -1,23 +1,25 @@
 class Solution {
 public:
-    void func(set<vector<int>>& st, vector<int>& temp, vector<int>& nums, int i)
+    void recurr(vector<vector<int>>&result,vector<int>&nums,int i,vector<int>&temp)
     {
-        if(i == nums.size())
+        result.push_back(temp);
+        for(int j=i;j<nums.size();j++)
         {
-            st.insert(temp);
-            return;
+            if(i!=j && nums[j]==nums[j-1])//duplicacy
+            {
+                continue;
+            }
+            temp.push_back(nums[j]);
+            recurr(result,nums,j+1,temp);
+            temp.pop_back();
         }
-        temp.push_back(nums[i]);
-        func(st,temp,nums,i+1);
-        temp.pop_back();
-        func(st,temp,nums,i+1);
     }
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
-        set<vector<int>>st;
+        int n=nums.size();
+        vector<vector<int>>result;
         vector<int>temp;
-        func(st,temp,nums,0);
-        vector<vector<int>>result(st.begin(),st.end());
+        sort(nums.begin(),nums.end());
+        recurr(result,nums,0,temp);
         return result;
     }
 };

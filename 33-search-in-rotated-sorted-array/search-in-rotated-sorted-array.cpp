@@ -28,7 +28,7 @@ public:
                 {
                     low=mid+1;
                 }
-                else
+                else 
                 {
                     high=mid-1;
                 }

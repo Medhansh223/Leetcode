@@ -17,35 +17,29 @@ public:
         {
             return postorder;
         }
-        TreeNode* curr=root;
-        while(curr!=NULL)
+        stack<TreeNode*>st1;
+        stack<TreeNode*>st2;
+        st1.push(root);
+        while(!st1.empty())
         {
-            if(curr->right==NULL)
+            root=st1.top();
+            st1.pop();
+            st2.push(root);
+            if(root->left!=NULL)
             {
-                postorder.push_back(curr->val);
-                curr=curr->left;
+                st1.push(root->left);
             }
-            else
+            if(root->right!=NULL)
             {
-                TreeNode* prev=curr->right;
-                while(prev->left!=NULL && prev->left!=curr)
-                {
-                    prev=prev->left;
-                }
-                if(prev->left==NULL)
-                {
-                    prev->left=curr;
-                    postorder.push_back(curr->val);
-                    curr=curr->right;
-                }
-                else
-                {
-                    prev->left=NULL;
-                    curr=curr->left;
-                }
+                st1.push(root->right);
             }
         }
-        reverse(postorder.begin(), postorder.end());
+        while(!st2.empty())
+        {
+            root=st2.top();
+            st2.pop();
+            postorder.push_back(root->val);
+        }
         return postorder;
     }
 };

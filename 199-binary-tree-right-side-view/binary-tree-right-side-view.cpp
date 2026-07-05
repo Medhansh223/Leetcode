@@ -11,26 +11,35 @@
  */
 class Solution {
 public:
-    void traversal(vector<int>&result, int level, TreeNode* root)
-    {
-        if(root == NULL)
-        {
-            return ;
-        }
-        if(result.size() < level)
-        {
-            result.push_back(root->val);
-        }
-        traversal(result,level+1,root->right);
-        traversal(result,level+1,root->left);
-    }
     vector<int> rightSideView(TreeNode* root) {
         vector<int>result;
         if(root == NULL)
         {
             return result;
         }
-        traversal(result,1,root);
+        queue<TreeNode*>q;
+        q.push(root);
+        while(!q.empty())
+        {
+            int n = q.size();
+            vector<int>temp;
+            for(int i=0;i<n;i++)
+            {
+                TreeNode* node = q.front();
+                q.pop();
+                temp.push_back(node->val);
+                if(node->left != NULL)
+                {
+                    q.push(node->left);
+                }
+                if(node->right != NULL)
+                {
+                    q.push(node->right);
+                }
+            }
+            int x = temp.size();
+            result.push_back(temp[x-1]);
+        }
         return result;
     }
 };

@@ -11,26 +11,24 @@
  */
 class Solution {
 public:
-    int dfsheight(TreeNode* root)
+    int height(TreeNode* root)
     {
-        if(root==NULL)
+        if(root == NULL)
         {
             return 0;
         }
-        int lh=dfsheight(root->left);
-        int rh=dfsheight(root->right);
-        if(lh==-1 || rh==-1)
-        {
-            return -1;
-        }
-        if(abs(lh-rh)>1)
-        {
-            return -1;
-        }
-        return 1+max(lh,rh);
+        int lh = height(root->left);
+        int rh = height(root->right);
+        return 1 + max(lh,rh);
     }
     bool isBalanced(TreeNode* root) {
-        if(dfsheight(root)!=-1)
+        if(root == NULL)
+        {
+            return true;
+        }
+        int lh = height(root->left);
+        int rh = height(root->right);
+        if(abs(lh - rh) <= 1 && isBalanced(root->left) && isBalanced(root->right))
         {
             return true;
         }

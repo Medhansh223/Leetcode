@@ -23,32 +23,16 @@ public:
         {
             return NULL;
         }
-        queue<Node*>q;
-        q.push(root);
-        while(!q.empty())
+        if(root->left != NULL)
         {
-            int n = q.size();
-            Node* prev = NULL;
-            for(int i=0;i<n;i++)
-            {
-                Node* node = q.front();
-                q.pop();
-                if(prev)
-                {
-                    prev->next = node;
-                }
-                prev = node;
-                if(node->left)
-                {
-                    q.push(node->left);
-                }
-                if(node->right)
-                {
-                    q.push(node->right);
-                }
-            }
-            prev->next = NULL;
+            root->left->next = root->right;
         }
+        if(root->right != NULL && root->next != NULL)
+        {
+            root->right->next = root->next->left;
+        }
+        connect(root->left);
+        connect(root->right);
         return root;
     }
 };

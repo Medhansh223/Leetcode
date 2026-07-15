@@ -1,8 +1,8 @@
 class Solution {
 public:
-    void bfs(vector<vector<int>>&image,vector<vector<int>>&copy,int sr,int sc,int initial,int color)
+    void bfs(vector<vector<int>>&image, int sr,int sc,int initial,int color)
     {
-        copy[sr][sc]=color;
+        image[sr][sc]=color;
         int n=image.size();
         int m=image[0].size();
         queue<pair<int,int>>q;
@@ -18,9 +18,9 @@ public:
             {
                 int nrow=r+drow[i];
                 int ncol=c+dcol[i];
-                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && copy[nrow][ncol]!=color && image[nrow][ncol]==initial)
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && image[nrow][ncol]!=color && image[nrow][ncol]==initial)
                 {
-                    copy[nrow][ncol]=color;
+                    image[nrow][ncol]=color;
                     q.push({nrow,ncol});
                 }
             }
@@ -29,9 +29,9 @@ public:
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
         int n=image.size();
         int m=image[0].size();
-        vector<vector<int>>copy=image;
+        // vector<vector<int>>copy=image;
         int initial=image[sr][sc];
-        bfs(image,copy,sr,sc,initial,color);
-        return copy;
+        bfs(image,sr,sc,initial,color);
+        return image;
     }
 };

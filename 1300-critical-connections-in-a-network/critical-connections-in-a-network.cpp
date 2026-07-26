@@ -1,20 +1,20 @@
 class Solution {
 public:
-    void dfs(int node, int parent, vector<vector<int>>& adj, vector<int>& vis, vector<int>& time, vector<int>& low_time, vector<vector<int>>& bridges, int &timer)
+    void dfs(int node, int parent, vector<vector<int>>& adj, vector<int>& vis, vector<int>& time, vector<int>& low_time, vector<vector<int>>& bridges, int& timer)
     {
         vis[node]=1;
         time[node]=low_time[node]=timer;
         timer++;
-        for(auto it: adj[node])
+        for(auto it:adj[node])
         {
-            if(it==parent)
+            if(parent==it)
             {
                 continue;
             }
             if(!vis[it])
             {
                 dfs(it,node,adj,vis,time,low_time,bridges,timer);
-                low_time[node]=min(low_time[node], low_time[it]);
+                low_time[node]=min(low_time[node],low_time[it]);
                 if(time[node]<low_time[it])
                 {
                     bridges.push_back({node,it});
@@ -22,13 +22,13 @@ public:
             }
             else
             {
-                low_time[node]=min(low_time[node], low_time[it]);
+                low_time[node]=min(low_time[node],low_time[it]);
             }
         }
     }
     vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
         vector<vector<int>>adj(n);
-        for(auto it: connections)
+        for(auto it:connections)
         {
             int u=it[0];
             int v=it[1];
@@ -38,8 +38,8 @@ public:
         vector<int>vis(n,0);
         vector<int>time(n,0);
         vector<int>low_time(n,0);
-        int timer=1;
         vector<vector<int>>bridges;
+        int timer=0;
         dfs(0,-1,adj,vis,time,low_time,bridges,timer);
         return bridges;
     }

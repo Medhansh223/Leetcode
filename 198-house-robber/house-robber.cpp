@@ -1,43 +1,42 @@
 class Solution {
 public:
-    int memo(int i, vector<int>& dp, vector<int>& nums)
+    int recur(vector<int>& nums, int i)
     {
         if(i == 0)
         {
-            return nums[0];
+            return nums[i];
         }
-        if(dp[i] != - 1)
-        {
-            return dp[i];
-        }
-        int not_pick = memo(i-1,dp,nums);
+        int not_pick = recur(nums,i-1);
         int pick = nums[i];
         if(i >= 2)
         {
-            pick = pick + memo(i-2,dp,nums);
+            pick = pick + recur(nums,i-2);
         }
-        dp[i] = max(pick,not_pick);
-        return dp[i];
+        return max(pick, not_pick);
     }
-    int tabu(int n, vector<int>& dp, vector<int>& nums)
+    int memo(vector<int>& dp, vector<int>& nums, int i)
     {
-        dp[0] = nums[0];
-        for(int i=1;i<n;i++)
+        if(i == 0)
         {
-            int not_pick = dp[i-1];
-            int pick = nums[i];
-            if(i >= 2)
-            {
-                pick = pick + dp[i-2];
-            }
-            dp[i] = max(pick,not_pick);
+            return nums[i];
         }
-        return dp[n-1];
+        if(dp[i] != -1)
+        {
+            return dp[i];
+        }
+        int not_pick = memo(dp,nums,i-1);
+        int pick = nums[i];
+        if(i >= 2)
+        {
+            pick = pick + memo(dp,nums,i-2);
+        }
+        dp[i] = max(pick, not_pick);
+        return dp[i];
     }
     int rob(vector<int>& nums) {
         int n = nums.size();
+        // return recur(nums, n-1);
         vector<int>dp(n,-1);
-        return memo(n-1,dp,nums);
-        return tabu(n,dp,nums);
+        return memo(dp, nums, n-1);
     }
 };

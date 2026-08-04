@@ -24,7 +24,7 @@ public:
         }
         for(int i=n-2;i>=0;i--)
         {
-            for(int j=i;j>=0;j--)
+            for(int j=0;j<i;j++)
             {
                 int down = triangle[i][j] + dp[i+1][j];
                 int dj = triangle[i][j] + dp[i+1][j+1];

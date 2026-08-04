@@ -32,7 +32,7 @@ public:
                 else
                 {
                     int up = grid[i][j];
-                    if(i > 0)
+                    if(i-1 >= 0)
                     {
                         up = up + dp[i-1][j];
                     }

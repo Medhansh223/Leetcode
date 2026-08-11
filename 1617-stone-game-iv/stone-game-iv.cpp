@@ -36,9 +36,27 @@ public:
         dp[n] = false;
         return dp[n];
     }
+    bool tabu(int n, vector<bool>& dp)
+    {
+        dp[0] = false;
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j*j<=i;j++)
+            {
+                if(dp[i - (j*j)] == false)
+                {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[n];
+    }
     bool winnerSquareGame(int n) {
         // return recur(n);
-        vector<int>dp(n+1,-1);
-        return memo(n,dp);
+        // vector<int>dp(n+1,-1);
+        // return memo(n,dp);
+        vector<bool>dp(n+1,false);
+        return tabu(n,dp);
     }
 };

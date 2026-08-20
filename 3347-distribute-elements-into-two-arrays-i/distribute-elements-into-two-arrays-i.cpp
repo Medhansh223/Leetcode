@@ -12,7 +12,7 @@ public:
             {
                 nums1.push_back(nums[i]);
             }
-            else if(nums1.back() < nums2.back())
+            else if(nums1.back() <= nums2.back())
             {
                 nums2.push_back(nums[i]);
             }
